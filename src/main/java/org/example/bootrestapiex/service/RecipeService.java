@@ -9,4 +9,6 @@ public interface RecipeService {
     public List<Recipe> findAll();
 
     public Recipe save(Recipe recipe) throws BadRequestException;
+
+    void delete(Long id);
 }

@@ -39,5 +39,10 @@ public class RecipeController {
 //            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build(); // Service에서 이름입력 X 일때 넘어온 예외처리를 BAD_REQUEST 처리.
 //        }
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Recipe> deleteRecipe(@PathVariable Long id) {
+        recipeService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 
 }
