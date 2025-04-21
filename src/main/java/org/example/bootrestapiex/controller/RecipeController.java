@@ -28,15 +28,16 @@ public class RecipeController {
     }
 
     @PostMapping
-    public ResponseEntity<Recipe> addRecipe(@RequestBody RecipeDTO recipeDTO){
-        try {
+    public ResponseEntity<Recipe> addRecipe(@RequestBody RecipeDTO recipeDTO) throws BadRequestException {
+//        try {
             Recipe recipe = new Recipe();
             recipe.setName(recipeDTO.name());
             recipe.setDescription(recipeDTO.description());
 //        return recipeService.save(recipe);
             return ResponseEntity.status(HttpStatus.CREATED).body(recipeService.save(recipe));
-        } catch (BadRequestException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build(); // Service에서 이름입력 X 일때 넘어온 예외처리를 BAD_REQUEST 처리.
-        }
+//        } catch (BadRequestException e) {
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build(); // Service에서 이름입력 X 일때 넘어온 예외처리를 BAD_REQUEST 처리.
+//        }
     }
+
 }
