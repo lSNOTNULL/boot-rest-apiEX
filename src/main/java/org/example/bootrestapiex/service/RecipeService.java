@@ -11,4 +11,6 @@ public interface RecipeService {
     public Recipe save(Recipe recipe) throws BadRequestException;
 
     void delete(Long id);
+
+    Recipe findById(Long id);
 }

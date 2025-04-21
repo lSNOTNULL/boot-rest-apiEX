@@ -32,5 +32,10 @@ public class RecipeServiceJPAImpl implements RecipeService {
         recipeRepository.deleteById(id);
     }
 
+    @Override
+    public Recipe findById(Long id) {
+        return recipeRepository.findById(id).orElse(null);
+    }
+
 
 }

@@ -45,4 +45,17 @@ public class RecipeController {
         return ResponseEntity.noContent().build();
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Recipe> updateRecipe(@PathVariable Long id, @RequestBody RecipeDTO recipeDTO) throws BadRequestException {
+        Recipe oldRecipe = recipeService.findById(id);
+        oldRecipe.setName(recipeDTO.name());
+        oldRecipe.setDescription(recipeDTO.description());
+        return ResponseEntity.status(HttpStatus.CREATED).body(recipeService.save(oldRecipe));
+    }
+    @PatchMapping("/{id}/name")
+    public ResponseEntity<Recipe> updateName(@PathVariable Long id, @RequestBody RecipeDTO recipeDTO) throws BadRequestException {
+        Recipe oldRecipe = recipeService.findById(id);
+        oldRecipe.setName(recipeDTO.name());
+        return ResponseEntity.status(HttpStatus.CREATED).body(recipeService.save(oldRecipe));
+    }
 }
