@@ -1,6 +1,7 @@
 package org.example.bootrestapiex.service;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.BadRequestException;
 import org.example.bootrestapiex.model.entity.Recipe;
 import org.example.bootrestapiex.repository.RecipeRepository;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,10 @@ public class RecipeServiceJPAImpl implements RecipeService {
     }
 
     @Override
-    public Recipe save(Recipe recipe) {
+    public Recipe save(Recipe recipe) throws BadRequestException {
+        if(recipe.getName() == null || recipe.getName().isEmpty()) {
+            throw new BadRequestException("이름 없음"); // 이름 입력 안하면 BadRequest 처리
+        }
         return recipeRepository.save(recipe);
     }
 }

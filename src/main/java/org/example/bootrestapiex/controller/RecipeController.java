@@ -1,10 +1,12 @@
 package org.example.bootrestapiex.controller;
 
+import org.apache.coyote.BadRequestException;
+import org.example.bootrestapiex.model.dto.RecipeDTO;
 import org.example.bootrestapiex.model.entity.Recipe;
 import org.example.bootrestapiex.service.RecipeService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,11 +19,24 @@ public class RecipeController {
     }
 
     @GetMapping
-    public List<Recipe> getAllRecipes() {
-        Recipe r = new Recipe();
-        r.setName("커리");
-        r.setDescription("맛있는 커리");
-        recipeService.save(r);
-        return recipeService.findAll();
+    public ResponseEntity<List<Recipe>> getAllRecipes() {
+//        Recipe r = new Recipe();
+//        r.setName("커리");
+//        r.setDescription("맛있는 커리");
+//        recipeService.save(r);
+        return ResponseEntity.ok(recipeService.findAll());
+    }
+
+    @PostMapping
+    public ResponseEntity<Recipe> addRecipe(@RequestBody RecipeDTO recipeDTO){
+        try {
+            Recipe recipe = new Recipe();
+            recipe.setName(recipeDTO.name());
+            recipe.setDescription(recipeDTO.description());
+//        return recipeService.save(recipe);
+            return ResponseEntity.status(HttpStatus.CREATED).body(recipeService.save(recipe));
+        } catch (BadRequestException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build(); // Service에서 이름입력 X 일때 넘어온 예외처리를 BAD_REQUEST 처리.
+        }
     }
 }
