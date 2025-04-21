@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/recipe")
+@CrossOrigin // 다 풀리는 것 -> Open API
 public class RecipeController {
     private final RecipeService recipeService;
     public RecipeController(RecipeService recipeService) {
